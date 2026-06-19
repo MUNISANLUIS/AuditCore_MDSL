@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    // Mostrar formulario de login
+    // Mostrar formulario de login(Ailynn)
     public function showLoginForm()
     {
         return view('login');
