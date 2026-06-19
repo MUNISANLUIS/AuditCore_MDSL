@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - AuditCore MDSL</title>
+    <title>Registro - AuditCore MDSL</title>
     <style>
         * {
             margin: 0;
@@ -20,13 +20,13 @@
             align-items: center;
         }
 
-        .login-container {
+        .register-container {
             background: white;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
         }
 
         h1 {
@@ -68,10 +68,14 @@
             outline: none;
         }
 
+        input.error {
+            border-color: #e74c3c;
+        }
+
         button {
             width: 100%;
             padding: 12px;
-            background: #667eea;
+            background: #27ae60;
             color: white;
             border: none;
             border-radius: 5px;
@@ -82,7 +86,7 @@
         }
 
         button:hover {
-            background: #5a67d8;
+            background: #219a52;
         }
 
         .error {
@@ -95,23 +99,45 @@
             text-align: center;
         }
 
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #a5d6a7;
+            text-align: center;
+        }
+
         .footer {
             text-align: center;
             margin-top: 20px;
             color: #888;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .footer a {
             color: #667eea;
             text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .error-text {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="register-container">
         <h1> AuditCore MDSL</h1>
-        <p class="subtitle">Inicia sesion para continuar</p>
+        <p class="subtitle">Crea tu cuenta para comenzar</p>
 
         @if(session('error'))
             <div class="error">
@@ -119,28 +145,48 @@
             </div>
         @endif
 
-        <form method="POST" action="/login">
+        @if(session('success'))
+            <div class="success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form method="POST" action="/register">
             @csrf
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                <label for="name">Nombre completo</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre" required value="{{ old('name') }}">
+                @error('name')
+                    <span class="error-text">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="form-group">
-                <label for="password">Contrasena</label>
-                <input type="password" id="password" name="password" placeholder="********" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required value="{{ old('email') }}">
+                @error('email')
+                    <span class="error-text">{{ $message }}</span>
+                @enderror
             </div>
 
-            <button type="submit">Iniciar Sesion</button>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" required>
+                @error('password')
+                    <span class="error-text">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="password_confirmation">Confirmar contraseña</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Repite tu contraseña" required>
+            </div>
+
+            <button type="submit">Registrarse</button>
         </form>
 
-<div class="footer">
-    <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
-    <p style="margin-top: 5px;">Sistema AuditCore MDSL</p>
-</div>
-
         <div class="footer">
-            <p>Sistema AuditCore MDSL</p>
+            ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
         </div>
     </div>
 </body>

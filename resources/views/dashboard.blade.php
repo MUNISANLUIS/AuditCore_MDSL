@@ -129,14 +129,14 @@
         <div class="user-info">
             <span> {{ $user->name }}</span>
             <span> {{ $user->email }}</span>
-            <a href="/logout" class="btn-logout">Cerrar Sesion</a>
+            <a href="/logout" class="btn-logout">Cerrar Sesión</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="card">
             <h2> Bienvenido, {{ $user->name }}!</h2>
-            <p>Has iniciado sesion correctamente.</p>
+            <p>Has iniciado sesión correctamente.</p>
 
             <div class="info-grid">
                 <div class="info-item">
@@ -153,11 +153,11 @@
                 </div>
                 <div class="info-item">
                     <label>Verificado</label>
-                    <p>{{ $user->email_verified_at ? ' Si' : ' No' }}</p>
+                    <p>{{ $user->email_verified_at ? ' Sí' : ' No' }}</p>
                 </div>
             </div>
 
-            <div class="badge"> Sesion activa</div>
+            <div class="badge"> Sesión activa</div>
         </div>
     </div>
 </body>

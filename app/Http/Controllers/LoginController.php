@@ -40,6 +40,33 @@ class LoginController extends Controller
         return back()->with('error', 'Email o contraseña incorrectos');
     }
 
+    // Mostrar formulario de registro
+    public function showRegisterForm()
+    {
+        return view('register');
+    }
+
+    // Procesar registro
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        // Insertar usuario con contraseña encriptada
+        DB::table('users')->insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        return redirect('/login')->with('success', 'Usuario registrado exitosamente. Inicia sesión.');
+    }
+
     // Dashboard (página protegida)
     public function dashboard()
     {
